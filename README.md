@@ -16,10 +16,105 @@ D'abord nous allons vérifier que Docker Engine et Docker Client son bien instal
    docker version
 ```
 
-![image](./screenshot/docker_version.png)
+![image](./img/docker_version.png)
+
+
+## Création des conteneurs sur le poste local
+
+### D'abord il faut creer notre réseau local nommer : mon_reseau avec la commande suivante : 
+
+``` bash
+   docker network create mon_reseau
+```
+
+![image](./img/docker_network.png)
+
+### Pour créer le conteneur Apache , entrer la commande suivante : 
+
+``` bash
+   docker container run -d --network mon_reseau --name apache -p 80:80 httpd:latest
+```
+
+### Description des options 
+
+   -d :
+   
+    pour détacher le container du terminal 
+
+   --network mon_reseau :
+   
+    pour utiliser le reseau local creer plutôt
+
+   --name apache : 
+
+    pour nommer le conteneur
+
+   -p 80:80 
+
+    pour que le conteneur écoute et diffuse sur le pour 80
+
+   httpd:latest 
+
+    l'image qui sera télécharge via docker 
+
+![image](./img/docker_apache.png)
+
+### Création du volume de MongoDB
+Entrer la commande suivante : 
+
+``` bash
+   docker volume create mongpodb
+```
+
+![image](./img/docker_volume_mongodb.png)
+
+
+Pour valider la cération du volume entrer cette commande : 
+
+``` bash
+   docker volume ls
+```
+![image](./img/docker_volume_ls.png)
 
 
 
+### Création du conteneur MongoDB 
+   Entrer la commande suivante : 
 
+``` bash
+   docker container run -d --network mon_reseau --name apache -p 80:80 httpd:latest
+```
+
+### Description des options 
+
+   -d :
+   
+    pour détacher le container du terminal 
+
+   --network mon_reseau :
+   
+    pour utiliser le reseau local creer plutôt
+
+   --name mongodb : 
+
+    pour nommer le conteneur
+
+   -e MONGO_INITDB_ROOT_USERNAME=adminmongo
+
+    pour initialisé le nom d'administrateur 
+
+   -e MONGO_INITDB_ROOT_PASSWORD=EncoreUneAutreBD
+
+    pour initialisé le nom d'administrateur 
+
+   -v mongodb:/point_montage 
+
+    poour associé le volume que nous avons créer plutôt
+
+   mongodb/mongodb-community-server
+
+    l'image qui sera télécharge via docker 
+
+![image](./img/docker_mongodb.png)
 
 
